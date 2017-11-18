@@ -4,7 +4,7 @@
 |  1  |[**<big id=b1>Two Sum</big>**](#1)|<font color=#22AD22>**E**</font>|Array \| Hash Table|
 |  2  |[**<big id=b2>Add Two Numbers</big>**](#2)|<font color=#FFB700>**M**</font>|Linked List \| Math|
 |  10 |[**<big id=b10>Regular Expression Matching</big>**](#10)|<font color=#EC043C>**H**</font>|String \| DP \| Backtracking|
-|  13 |[**<big id=b></big>**](#n)|<font color=#EC043C>**H**</font>||
+|  b  |[**<big id=b></big>**](#n)|<font color=#EC043C>**H**</font>||
 
 
 ## <b id=1>[Two Sum](#b1)</b>
@@ -48,15 +48,54 @@ class Solution(object):
 ```
 
 ## <b id=2>[Add Two Numbers](#b2)</b>
-
+* You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+* You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 #### Example:
 ```
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
 ```
 #### Thinking:
-```
-```
+* 链表操作问题，注意进位问题即可。
 #### Solution:
-```
+```c++
+#include<iostream>
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x){
+        val = x;
+        next = NULL;
+    }
+};
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode * head = new ListNode(0);
+        ListNode * n = head;
+        int over = 0;
+
+        //循环停止条件为 l1为空 or l2为空 or 没有进位。
+        while(l1 || l2 || over){
+            n->next = new ListNode(over);
+            n = n->next;
+            if(l1){
+                n->val+=l1->val;
+                l1 = l1->next;
+            }
+            if(l2){
+                n->val+=l2->val;
+                l2 = l2->next;
+            }
+            over = n->val/10;
+            n->val %= 10;
+        }
+        return head->next;
+    }
+};
 ```
 ## <b id=10>[Regular Expression Matching](#b10)</b>
 * Implement regular expression matching with support for '.' and '*'
